@@ -1,3 +1,6 @@
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "contracts/v3-core"]
+	path = contracts/v3-core
+	url = https://github.com/uniswap/v3-core
