@@ -1,31 +1,34 @@
-# Arbiter Template
+# Arbiter UniswapV3 Integration
+The most hotly requested example to develop alongside Arbiter is with the Uniswap V3 contracts.
+Uniswap V3 is a decentralized exchange that allows users to provide liquidity to the platform and earn fees in return.
+Liquidity management is a key aspect of Uniswap V3 and there is much to learn about how to manage liquidity in a way that is profitable and sustainable.
+We hope to provide useful behaviors and simulations from those that will allow people to battletest the protocol and their own strategies on top of it.
 
-Minimal template for simulating contracts with arbiter. This template provides an example of how to build Agent-Based Models (ABM) with evm parity. In this model, you can think of anything that happens as a *behavior* of an agent. Agents can have externally owned accounts (EOAs), interact with each other, and interact with smart contracts. 
+## Goals
+**Initially:**
+- [ ] Create basic deployment behaviors to get the Uniswap V3 contracts deployed into the Arbiter environment.
+- [ ] Create basic liquidity management behaviors to allow users to provide liquidity to the Uniswap V3 contracts.
+- [ ] Create basic swapping behaviors to allow users to swap on the Uniswap V3 contracts.
+    - [ ] Create an arbitrage behavior so that UniV3 can track simulated price paths.
 
-This repository has an example behavior [`Incrementer`](src/bahaviors/incrementer.rs). The current design philosophy is that the user should only ever have to build agent behaviors implementing the [`Behavior`](https://github.com/primitivefinance/arbiter/blob/fe6b556d715d641aa9378ae20560629ec6ba5b43/arbiter-engine/src/machine.rs#L73) trait. In this example, the `Incrementer` behavior is configured with a [config file](https://github.com/primitivefinance/arbiter-template/blob/main/configs/example.toml). Configuring behaviors with a config file is a design choice we made to enable versatile parameterization at runtime as opposed to compile time.
-
-### Prerequisites
-
-- Rust programming language and Cargo package manager (latest stable version recommended)
-- [Foundry](https://book.getfoundry.sh/getting-started/installation) is used behind the scenes to generate rust contract bindings. Make sure you have forge installed and up to date.
-
-## Usage
-
-> `cargo generate` is a tool to create new Rust projects from pre-existing templates. It is used to create a new project from a template.
-
-``` bash 
-cargo install cargo-generate
-```
-Use the template
-```
-cargo generate --git https://github.com/primitivefinance/arbiter-template
-```
+--- 
+**Later:**
+- [ ] Fork state from mainnet to allow for simulations from historical data.
+- [ ] Thoroughly manage gas costs and other costs associated with interacting with the Uniswap V3 contracts.
+- [ ] Create more complex liquidity management behaviors to allow users to manage their liquidity in a more sophisticated way, e.g., with optimization schemes.
 
 
-> Run the template project
-```bash
-cargo run simulate configs/example.toml -vvv
-```
+## Ideology
+We should aim to create extensible and generic behaviors that can be customized to do more complex things.
+For instance, swapping can be extended to include more complex logic for determining the best price to swap at, e.g., arbitrage.
+We want these behaviors to be as generic and nuclear as possible so that they can be used in other contexts like legos.
+This will allow us to build more complex strategies on top of these basic behaviors.
+Code here will be reusable, extensible, modular, and composable.
 
-## Log Verbosity
-The `-vvv` flag is used to increase the verbosity of the logs. The more `v`'s, the more verbose the logs.
+Of course, we will also go about this iteratively. 
+We will not have the perfect abstractions from the start, but we will aim to refactor and improve the code as we go along.
+Efforts here will likely induce changes in the Arbiter core or engine, and we will aim to make those changes as well.
+
+## Contribution
+We are open to contributions from the community!
+If you have any issues to make, PRs to open, or other discussions to have, please feel free to do so.
