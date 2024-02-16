@@ -23,7 +23,6 @@ pub mod ierc20_minimal;
 pub mod liquidity_math;
 pub mod low_gas_safe_math;
 pub mod mock_time_uniswap_v3_pool;
-pub mod mock_time_uniswap_v3_pool_deployer;
 pub mod no_delegate_call;
 pub mod oracle;
 pub mod position;
