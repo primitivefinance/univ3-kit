@@ -32,6 +32,7 @@ pub mod swap_math;
 pub mod tick;
 pub mod tick_bitmap;
 pub mod tick_math;
+pub mod token;
 pub mod transfer_helper;
 pub mod uniswap_v3_factory;
 pub mod uniswap_v3_pool;
