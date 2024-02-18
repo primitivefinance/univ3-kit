@@ -11,7 +11,7 @@ use ethers::types::H160;
 use super::*;
 use crate::bindings::{token::ArbiterToken, uniswap_v3_factory::UniswapV3Factory};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct DeploymentData {
     token_0: H160,
     token_1: H160,
@@ -30,7 +30,7 @@ impl DeploymentData {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Deployer;
 
 #[async_trait::async_trait]
@@ -54,7 +54,7 @@ impl Behavior<()> for Deployer {
         .send()
         .await?;
 
-        let factory = UniswapV3Factory::deploy(client, ())?.send().await?;
+        let factory = UniswapV3Factory::deploy(client.clone(), ())?.send().await?;
 
         let pool = factory
             .create_pool(token_0.address(), token_1.address(), 100)
@@ -69,7 +69,16 @@ impl Behavior<()> for Deployer {
             pool,
         );
 
-        messager.send(To::All, serde_json::to_string(&deployment_data)?).await;
+        match serde_json::to_string(&deployment_data) {
+            Ok(json_string) => {
+                messager
+                    .send(To::All, json_string)
+                    .await?;
+            }
+            Err(_) => {
+                return Err(anyhow::anyhow!("Failed to serialize deployment data"));
+            }
+        }
 
         Ok(None)
     }
