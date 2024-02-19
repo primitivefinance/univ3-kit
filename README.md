@@ -6,7 +6,7 @@ We hope to provide useful behaviors and simulations from those that will allow p
 
 ## Goals
 **Initially:**
-- [ ] Create basic deployment behaviors to get the Uniswap V3 contracts deployed into the Arbiter environment.
+- [x] Create basic deployment behaviors to get the Uniswap V3 contracts deployed into the Arbiter environment.
 - [ ] Create basic liquidity management behaviors to allow users to provide liquidity to the Uniswap V3 contracts.
 - [ ] Create basic swapping behaviors to allow users to swap on the Uniswap V3 contracts.
     - [ ] Create an arbitrage behavior so that UniV3 can track simulated price paths.
