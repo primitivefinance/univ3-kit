@@ -54,7 +54,7 @@ impl Behavior<()> for Deployer {
         .send()
         .await?;
 
-        let factory = UniswapV3Factory::deploy(client.clone(), ())?.send().await?;
+        let factory = UniswapV3Factory::deploy(client, ())?.send().await?;
 
         let pool = factory
             .create_pool(token_0.address(), token_1.address(), 100)
@@ -69,16 +69,7 @@ impl Behavior<()> for Deployer {
             pool,
         );
 
-        match serde_json::to_string(&deployment_data) {
-            Ok(json_string) => {
-                messager
-                    .send(To::All, json_string)
-                    .await?;
-            }
-            Err(_) => {
-                return Err(anyhow::anyhow!("Failed to serialize deployment data"));
-            }
-        }
+        let _ =  messager.send(To::All, serde_json::to_string(&deployment_data)?).await;
 
         Ok(None)
     }
