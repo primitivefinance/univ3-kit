@@ -10,6 +10,7 @@ pub use bit_math::*;
     non_camel_case_types
 )]
 pub mod bit_math {
+
     #[allow(deprecated)]
     fn __abi() -> ::ethers::core::abi::Abi {
         ::ethers::core::abi::ethabi::Contract {
@@ -34,12 +35,8 @@ pub mod bit_math {
     /// The deployed bytecode of the contract.
     pub static BITMATH_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
+    #[derive(core::clone::Clone, core::fmt::Debug)]
     pub struct BitMath<M>(::ethers::contract::Contract<M>);
-    impl<M> ::core::clone::Clone for BitMath<M> {
-        fn clone(&self) -> Self {
-            Self(::core::clone::Clone::clone(&self.0))
-        }
-    }
     impl<M> ::core::ops::Deref for BitMath<M> {
         type Target = ::ethers::contract::Contract<M>;
         fn deref(&self) -> &Self::Target {
@@ -51,13 +48,7 @@ pub mod bit_math {
             &mut self.0
         }
     }
-    impl<M> ::core::fmt::Debug for BitMath<M> {
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple(::core::stringify!(BitMath))
-                .field(&self.address())
-                .finish()
-        }
-    }
+
     impl<M: ::ethers::providers::Middleware> BitMath<M> {
         /// Creates a new contract instance with the specified `ethers` client at
         /// `address`. The contract derefs to a `ethers::Contract` object.
