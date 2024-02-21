@@ -43,7 +43,9 @@ impl Behavior<()> for Deployer {
     ) -> Result<Option<EventStream<()>>> {
         let token_0 = self.deploy_token(&client, "Token 0", "0").await?;
         let token_1 = self.deploy_token(&client, "Token 1", "1").await?;
+        
         let factory = self.deploy_factory(&client).await?;
+        
         let pool = self.create_pool(&factory, token_0.address(), token_1.address()).await?;
 
         let deployment_data = DeploymentData {

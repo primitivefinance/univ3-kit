@@ -21,6 +21,7 @@ pub mod i_uniswap_v3_pool_state;
 pub mod i_uniswap_v3_swap_callback;
 pub mod ierc20_minimal;
 pub mod liquidity_math;
+pub mod liquid_exchange;
 pub mod low_gas_safe_math;
 pub mod mock_time_uniswap_v3_pool;
 pub mod no_delegate_call;
