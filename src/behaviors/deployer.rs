@@ -1,16 +1,17 @@
 use std::sync::Arc;
-use anyhow::anyhow;
-use anyhow::Result;
+
+use anyhow::{anyhow, Result};
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::{
     machine::{Behavior, EventStream},
     messager::{Messager, To},
 };
-
 use ethers::types::H160;
 
 use super::*;
-use crate::bindings::{token::ArbiterToken, uniswap_v3_factory::UniswapV3Factory, liquid_exchange::LiquidExchange};
+use crate::bindings::{
+    liquid_exchange::LiquidExchange, token::ArbiterToken, uniswap_v3_factory::UniswapV3Factory,
+};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
@@ -22,7 +23,13 @@ pub struct DeploymentData {
 }
 
 impl DeploymentData {
-    pub fn new(token_0: H160, token_1: H160, factory: H160, liquid_exchange: H160, pool: H160) -> Self {
+    pub fn new(
+        token_0: H160,
+        token_1: H160,
+        factory: H160,
+        liquid_exchange: H160,
+        pool: H160,
+    ) -> Self {
         Self {
             token_0,
             token_1,
@@ -48,8 +55,10 @@ impl Behavior<()> for Deployer {
 
         let factory = self.deploy_factory(&client).await?;
         let liquid_exchange = self.deploy_liquid_exchange(&client).await?;
-        
-        let pool = self.create_pool(&factory, token_0.address(), token_1.address()).await?;
+
+        let pool = self
+            .create_pool(&factory, token_0.address(), token_1.address())
+            .await?;
 
         let deployment_data = DeploymentData {
             token_0: token_0.address(),
@@ -59,7 +68,9 @@ impl Behavior<()> for Deployer {
             pool,
         };
 
-        messager.send(To::All, serde_json::to_string(&deployment_data)?).await;
+        messager
+            .send(To::All, serde_json::to_string(&deployment_data)?)
+            .await;
 
         Ok(None)
     }
@@ -104,12 +115,15 @@ impl Deployer {
             .map_err(|e| anyhow!("Failed to send liquid exchange: {}", e))
     }
 
-     async fn create_pool<M>(
+    async fn create_pool<M>(
         &self,
         factory: &UniswapV3Factory<M>,
         token_0: H160,
         token_1: H160,
-    ) -> Result<H160> where M: ethers::providers::Middleware  {
+    ) -> Result<H160>
+    where
+        M: ethers::providers::Middleware,
+    {
         factory
             .create_pool(token_0, token_1, 100)
             .call()
