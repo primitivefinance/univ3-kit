@@ -50,10 +50,10 @@ impl Behavior<()> for Deployer {
             token_0: token_0.address(),
             token_1: token_1.address(),
             factory: factory.address(),
-            pool: pool,
+            pool,
         };
 
-        messager.send(To::All, serde_json::to_string(&deployment_data)?).await;
+        let _ = messager.send(To::All, serde_json::to_string(&deployment_data)?).await?;
 
         Ok(None)
     }
