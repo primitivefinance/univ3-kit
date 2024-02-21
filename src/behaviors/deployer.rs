@@ -10,22 +10,24 @@ use arbiter_engine::{
 use ethers::types::H160;
 
 use super::*;
-use crate::bindings::{token::ArbiterToken, uniswap_v3_factory::UniswapV3Factory};
+use crate::bindings::{token::ArbiterToken, uniswap_v3_factory::UniswapV3Factory, liquid_exchange::LiquidExchange};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
     token_0: H160,
     token_1: H160,
     factory: H160,
+    liquid_exchange: H160,
     pool: H160,
 }
 
 impl DeploymentData {
-    pub fn new(token_0: H160, token_1: H160, factory: H160, pool: H160) -> Self {
+    pub fn new(token_0: H160, token_1: H160, factory: H160, liquid_exchange: H160, pool: H160) -> Self {
         Self {
             token_0,
             token_1,
             factory,
+            liquid_exchange,
             pool,
         }
     }
@@ -43,8 +45,9 @@ impl Behavior<()> for Deployer {
     ) -> Result<Option<EventStream<()>>> {
         let token_0 = self.deploy_token(&client, "Token 0", "0").await?;
         let token_1 = self.deploy_token(&client, "Token 1", "1").await?;
-        
+
         let factory = self.deploy_factory(&client).await?;
+        let liquid_exchange = self.deploy_liquid_exchange(&client).await?;
         
         let pool = self.create_pool(&factory, token_0.address(), token_1.address()).await?;
 
@@ -52,7 +55,8 @@ impl Behavior<()> for Deployer {
             token_0: token_0.address(),
             token_1: token_1.address(),
             factory: factory.address(),
-            pool: pool,
+            liquid_exchange: liquid_exchange.address(),
+            pool,
         };
 
         messager.send(To::All, serde_json::to_string(&deployment_data)?).await;
@@ -87,6 +91,17 @@ impl Deployer {
             .send()
             .await
             .map_err(|e| anyhow!("Failed to send factory deployment: {}", e))
+    }
+
+    async fn deploy_liquid_exchange(
+        &self,
+        client: &Arc<ArbiterMiddleware>,
+    ) -> Result<LiquidExchange<ArbiterMiddleware>> {
+        LiquidExchange::deploy(client.clone(), ())
+            .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
+            .send()
+            .await
+            .map_err(|e| anyhow!("Failed to send liquid exchange: {}", e))
     }
 
      async fn create_pool<M>(
