@@ -1,11 +1,12 @@
 use std::sync::Arc;
-
+use anyhow::anyhow;
 use anyhow::Result;
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::{
     machine::{Behavior, EventStream},
     messager::{Messager, To},
 };
+
 use ethers::types::H160;
 
 use super::*;
@@ -40,37 +41,62 @@ impl Behavior<()> for Deployer {
         client: Arc<ArbiterMiddleware>,
         messager: Messager,
     ) -> Result<Option<EventStream<()>>> {
-        let token_0 = ArbiterToken::deploy(
-            client.clone(),
-            (String::from("Token 0"), String::from("0"), 18),
-        )?
-        .send()
-        .await?;
+        let token_0 = self.deploy_token(&client, "Token 0", "0").await?;
+        let token_1 = self.deploy_token(&client, "Token 1", "1").await?;
+        let factory = self.deploy_factory(&client).await?;
+        let pool = self.create_pool(&factory, token_0.address(), token_1.address()).await?;
 
-        let token_1 = ArbiterToken::deploy(
-            client.clone(),
-            (String::from("Token 1"), String::from("1"), 18),
-        )?
-        .send()
-        .await?;
-
-        let factory = UniswapV3Factory::deploy(client, ())?.send().await?;
-
-        let pool = factory
-            .create_pool(token_0.address(), token_1.address(), 100)
-            .call()
-            .await?;
-
-        // Construct a data object that all other behaviours will recieve containing requisites for simulation.
-        let deployment_data = DeploymentData::new(
-            token_0.address(),
-            token_1.address(),
-            factory.address(),
-            pool,
-        );
+        let deployment_data = DeploymentData {
+            token_0: token_0.address(),
+            token_1: token_1.address(),
+            factory: factory.address(),
+            pool: pool,
+        };
 
         messager.send(To::All, serde_json::to_string(&deployment_data)?).await;
 
         Ok(None)
+    }
+}
+
+impl Deployer {
+    async fn deploy_token(
+        &self,
+        client: &Arc<ArbiterMiddleware>,
+        name: &str,
+        symbol: &str,
+    ) -> Result<ArbiterToken<ArbiterMiddleware>> {
+        ArbiterToken::deploy(
+            client.clone(),
+            (String::from(name), String::from(symbol), 18),
+        )
+        .map_err(|e| anyhow!("Failed to deploy token {}: {}", name, e))?
+        .send()
+        .await
+        .map_err(|e| anyhow!("Failed to send token {}: {}", name, e))
+    }
+
+    async fn deploy_factory(
+        &self,
+        client: &Arc<ArbiterMiddleware>,
+    ) -> Result<UniswapV3Factory<ArbiterMiddleware>> {
+        UniswapV3Factory::deploy(client.clone(), ())
+            .map_err(|e| anyhow!("Failed to deploy factory: {}", e))?
+            .send()
+            .await
+            .map_err(|e| anyhow!("Failed to send factory deployment: {}", e))
+    }
+
+     async fn create_pool<M>(
+        &self,
+        factory: &UniswapV3Factory<M>,
+        token_0: H160,
+        token_1: H160,
+    ) -> Result<H160> where M: ethers::providers::Middleware  {
+        factory
+            .create_pool(token_0, token_1, 100)
+            .call()
+            .await
+            .map_err(|e| anyhow!("Failed to create pool: {}", e))
     }
 }
