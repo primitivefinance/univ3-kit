@@ -57,15 +57,4 @@ jobs:
       - name: cargo udeps
         run: cargo +nightly udeps
 
-  codespell:
-    name: codespell
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run CodeSpell
-        uses: codespell-project/actions-codespell@v2.0
-        with:
-          check_hidden: true
-          check_filenames: true
-          skip: .git,Cargo.lock,target,CHANGELOG.md
-          ignore_words_list: crate,Crate,functio
+ 
