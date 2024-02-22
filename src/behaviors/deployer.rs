@@ -68,7 +68,7 @@ impl Behavior<()> for Deployer {
             pool,
         };
 
-        messager
+        let _ = messager
             .send(To::All, serde_json::to_string(&deployment_data)?)
             .await;
 
