@@ -1,0 +1,44 @@
+name: lint
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+jobs:
+  fmt:
+    name: fmt
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          components: rustfmt
+      - name: git submodule update
+        run: git submodule update --init --recursive
+      - name: cargo fmt
+        run: cargo +nightly fmt --all -- --check
+
+  clippy:
+    name: clippy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+      - name: git submodule update
+        run: git submodule update --init --recursive
+      - name: cargo clippy
+        run: cargo clippy --workspace --all-features -- -D warnings
+
+ 
