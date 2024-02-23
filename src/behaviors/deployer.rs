@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use std::sync::Arc;
 
 use anyhow::{anyhow, Result};
@@ -51,24 +50,13 @@ impl Behavior<()> for Deployer {
         client: Arc<ArbiterMiddleware>,
         messager: Messager,
     ) -> Result<Option<EventStream<()>>> {
-        println!("Prior to token deployment.");
-        let token_0 =
-            ArbiterToken::deploy(client.clone(), ("Token 0".to_owned(), "TKN".to_owned(), 18))?
-                .send()
-                .await?;
-        println!("Deployed token 0");
-        let token_1 = ArbiterToken::deploy(
-            client.clone(),
-            ("Token 1".to_owned(), "TKN0".to_owned(), 18),
-        )?
-        .send()
-        .await?;
-        println!("Deployed tokens");
+        let token_0 = deploy_token(client.clone(), "TOKEN 0", "TKN0").await?;
+        let token_1 = deploy_token(client.clone(), "TOKEN 1", "TKN1").await?;
+
         let factory = deploy_factory(&client).await?;
         let liquid_exchange = deploy_liquid_exchange(&client).await?;
 
         let pool = create_pool(&factory, token_0.address(), token_1.address()).await?;
-        println!("Got here.");
 
         let deployment_data = DeploymentData {
             token_0: token_0.address(),
@@ -78,11 +66,9 @@ impl Behavior<()> for Deployer {
             pool,
         };
 
-        println!("Deployment data: {:?}", deployment_data);
         messager
             .send(To::All, serde_json::to_string(&deployment_data)?)
             .await?;
-        debug!("Sent deployment data: {:?}", deployment_data);
 
         Ok(None)
     }
@@ -93,16 +79,14 @@ async fn deploy_token(
     name: &str,
     symbol: &str,
 ) -> Result<ArbiterToken<ArbiterMiddleware>> {
-    println!("In here.");
-    let thing = ArbiterToken::deploy(
+    let token = ArbiterToken::deploy(
         client.clone(),
-        (String::from(name), String::from(symbol), 18),
+        (name.to_string(), symbol.to_string(), 18_u8),
     )?
     .send()
-    .await;
-    println!("Thing: {:?}", thing);
+    .await?;
 
-    Ok(thing?)
+    Ok(token)
 }
 
 async fn deploy_factory(
