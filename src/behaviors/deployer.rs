@@ -89,11 +89,7 @@ async fn deploy_token(
 ) -> Result<ArbiterToken<ArbiterMiddleware>> {
     let token = ArbiterToken::deploy(
         client.clone(),
-        (
-            String::from(name), 
-            String::from(symbol), 
-            18_u8
-        ),
+        (String::from(name), String::from(symbol), 18_u8),
     )?
     .send()
     .await?;
