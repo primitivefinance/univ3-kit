@@ -193,6 +193,7 @@ mod tests {
                 h
             },
             messager: Some(messager.clone()),
+            client: None,
         };
 
         let agent = Agent::builder("token_admin_agent");
