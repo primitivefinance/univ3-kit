@@ -1,6 +1,9 @@
+#[allow(dead_code)]
+
 use std::sync::Arc;
 
 use anyhow::{anyhow, Result};
+use arbiter_bindings::bindings::{arbiter_token::ArbiterToken, liquid_exchange::LiquidExchange};
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::{
     machine::{Behavior, EventStream},
@@ -11,7 +14,6 @@ use tracing::debug;
 
 use super::*;
 use crate::bindings::uniswap_v3_factory::UniswapV3Factory;
-use arbiter_bindings::bindings::{arbiter_token::ArbiterToken, liquid_exchange::LiquidExchange};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
