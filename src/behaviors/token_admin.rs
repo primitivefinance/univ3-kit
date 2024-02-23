@@ -12,9 +12,14 @@ use crate::bindings::token::ArbiterToken;
 pub struct TokenAdmin {
     #[serde(skip)]
     pub tokens: Option<HashMap<String, ArbiterToken<ArbiterMiddleware>>>,
+
     pub token_data: HashMap<String, TokenData>,
+
     #[serde(skip)]
     pub messager: Option<Messager>,
+
+    #[serde(skip)]
+    pub client: Option<Arc<ArbiterMiddleware>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -30,8 +35,12 @@ pub struct TokenData {
 pub enum TokenAdminQuery {
     /// Get the address of the token.
     AddressOf(String),
+
     /// Mint tokens.
     MintRequest(MintRequest),
+
+    /// Deploy request.
+    DeployRequest(TokenData),
 }
 
 /// Used as an action to mint tokens.
@@ -73,6 +82,7 @@ impl Behavior<Message> for TokenAdmin {
         }
 
         self.tokens = Some(deployed_tokens);
+        self.client = Some(client.clone());
 
         let message_content = serde_json::to_string(&token_addresses)?;
 
@@ -130,6 +140,20 @@ impl Behavior<Message> for TokenAdmin {
                 }
                 Ok(ControlFlow::Continue)
             }
+            TokenAdminQuery::DeployRequest(deploy_request) => {
+                ArbiterToken::deploy(
+                    self.client.clone().unwrap(),
+                    (
+                        deploy_request.name,
+                        deploy_request.symbol,
+                        deploy_request.decimals,
+                    ),
+                )?
+                .send()
+                .await?;
+
+                Ok(ControlFlow::Continue)
+            }
         }
     }
 }
@@ -169,6 +193,7 @@ mod tests {
                 h
             },
             messager: Some(messager.clone()),
+            client: None,
         };
 
         let agent = Agent::builder("token_admin_agent");
