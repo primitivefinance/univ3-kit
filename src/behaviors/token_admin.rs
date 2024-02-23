@@ -2,13 +2,8 @@ use std::{collections::HashMap, sync::Arc};
 
 use anyhow::Result;
 use arbiter_core::middleware::ArbiterMiddleware;
-use arbiter_engine::{
-    machine::{Behavior, ControlFlow, EventStream},
-    messager::{Message, Messager, To},
-};
-
+use arbiter_engine::messager::{Message, Messager, To};
 use ethers::types::H160;
-use futures_util::StreamExt;
 
 use super::*;
 use crate::bindings::token::ArbiterToken;
@@ -139,58 +134,21 @@ impl Behavior<Message> for TokenAdmin {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
+
     use arbiter_engine::{agent::Agent, world::World};
-    use futures_util::{FutureExt, StreamExt};
-    use crate::behaviors::token_admin::{TokenAdmin, TokenData};
-    use tracing::{info, subscriber::set_global_default};
+    use futures_util::StreamExt;
     use tracing_subscriber::FmtSubscriber;
 
-    /*#[tokio::test]
-    async fn token_admin_behavior_test() {
-        // Initialize the tracing subscriber to capture logs
-        let subscriber = FmtSubscriber::new();
-        set_global_default(subscriber).expect("setting default subscriber failed");
-
-        let mut world = World::new("univ3");
-        let messager = world.messager.clone();
-
-        let token_admin_behavior = TokenAdmin {
-            tokens: None,
-            token_data: {
-                let mut h = HashMap::new();
-                h.insert("MockToken".to_string(), TokenData {
-                    name: "MockToken".to_string(),
-                    symbol: "MTK".to_string(),
-                    decimals: 18,
-                    address: None,
-                });
-                h
-            },
-            messager: Some(messager.clone()),
-        };
-
-        let agent = Agent::builder("token_admin_agent");
-        world.add_agent(agent.with_behavior(token_admin_behavior));
-
-        world.run().await.expect("World failed to run");
-
-        let mut stream = messager.stream().unwrap();
-        let res = stream.next().await.unwrap();
-        let token_res_data = res.data;
-        println!("{}", token_res_data);
-        assert_eq!("\"{\\\"MockToken\\\":\\\"0xb00efcb70090a21d46660adf95a16ec69623f694\\\"}\"", token_res_data);
-
-    }*/
+    use crate::behaviors::token_admin::{TokenAdmin, TokenData};
 
     #[tokio::test]
     async fn token_admin_behavior_test() {
-        // Initialize the tracing subscriber to capture logs
         let subscriber = FmtSubscriber::new();
-        tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
+        tracing::subscriber::set_global_default(subscriber)
+            .expect("setting default subscriber failed");
 
         let mut world = World::new("univ3");
         let messager = world.messager.clone();
@@ -199,12 +157,15 @@ mod tests {
             tokens: None,
             token_data: {
                 let mut h = HashMap::new();
-                h.insert("MockToken".to_string(), TokenData {
-                    name: "MockToken".to_string(),
-                    symbol: "MTK".to_string(),
-                    decimals: 18,
-                    address: None,
-                });
+                h.insert(
+                    "MockToken".to_string(),
+                    TokenData {
+                        name: "MockToken".to_string(),
+                        symbol: "MTK".to_string(),
+                        decimals: 18,
+                        address: None,
+                    },
+                );
                 h
             },
             messager: Some(messager.clone()),
@@ -220,14 +181,11 @@ mod tests {
             let token_res_data = &res.data;
             println!("{}", token_res_data);
 
-            // Deserialize the JSON string into a HashMap
-            let data: String = serde_json::from_str(token_res_data).expect("Failed to deserialize message data");
+            let data: String =
+                serde_json::from_str(token_res_data).expect("Failed to deserialize message data");
 
-            println!("{}", data);
-
-            // First, deserialize the JSON string into a HashMap
-            let parsed_data: HashMap<String, String> = serde_json::from_str(&data)
-                .expect("Failed to deserialize token data");
+            let parsed_data: HashMap<String, String> =
+                serde_json::from_str(&data).expect("Failed to deserialize token data");
 
             if let Some(address) = parsed_data.get("MockToken") {
                 assert_eq!("0xb00efcb70090a21d46660adf95a16ec69623f694", address);
