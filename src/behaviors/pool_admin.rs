@@ -1,6 +1,7 @@
 use std::{collections::HashMap, sync::Arc};
 
 use anyhow::Result;
+use anyhow::anyhow;
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::messager::{Message, Messager, To};
 use ethers::types::H160;
@@ -24,11 +25,12 @@ pub enum PoolAdminQuery {
     PoolCreation(PoolCreation),
 }
 
+#[derive(Debug, Deserialize, Serialize)]
 pub struct PoolCreation {
-    factory: &UniswapV3Factory<M>, 
-    token_0: H160, 
+    factory: H160,
+    token_0: H160,
     token_1: H160,
-    fee: usize,
+    fee: u32,
 }
 
 #[async_trait::async_trait]
@@ -55,11 +57,16 @@ impl Behavior<Message> for PoolAdmin {
 
         match query {
             PoolAdminQuery::PoolCreation(pool_creation) => {
-                pool_creation.factory
-                    .create_pool(pool_creation.token_0, pool_creation.token_1, pool_creation.fee.into())
+                UniswapV3Factory::new(pool_creation
+                    .factory, self.client.clone().unwrap())
+                    .create_pool(
+                        pool_creation.token_0,
+                        pool_creation.token_1,
+                        pool_creation.fee,
+                    )
                     .call()
                     .await
-                    .map_err(|e| anyhow!("Failed to create pool: {}", e))
+                    .map_err(|e| anyhow!("Failed to create pool: {}", e));
 
                 Ok(ControlFlow::Continue)
             }
