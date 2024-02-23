@@ -1,8 +1,8 @@
-use std::{collections::HashMap, sync::Arc};
+use std::sync::Arc;
 
 use anyhow::{anyhow, Result};
 use arbiter_core::middleware::ArbiterMiddleware;
-use arbiter_engine::messager::{Message, Messager, To};
+use arbiter_engine::messager::{Message, Messager};
 use ethers::types::H160;
 
 use super::*;
@@ -56,7 +56,7 @@ impl Behavior<Message> for PoolAdmin {
 
         match query {
             PoolAdminQuery::PoolCreation(pool_creation) => {
-                UniswapV3Factory::new(pool_creation.factory, self.client.clone().unwrap())
+                let _ = UniswapV3Factory::new(pool_creation.factory, self.client.clone().unwrap())
                     .create_pool(
                         pool_creation.token_0,
                         pool_creation.token_1,
