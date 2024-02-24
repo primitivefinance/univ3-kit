@@ -11,6 +11,6 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "cargo"
-    directory: "arbiter-core"
+    directory: "src/"
     schedule:
       interval: "daily"
