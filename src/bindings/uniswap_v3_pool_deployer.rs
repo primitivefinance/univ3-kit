@@ -7,59 +7,63 @@ pub use uniswap_v3_pool_deployer::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod uniswap_v3_pool_deployer {
     #[allow(deprecated)]
     fn __abi() -> ::ethers::core::abi::Abi {
         ::ethers::core::abi::ethabi::Contract {
             constructor: ::core::option::Option::None,
-            functions: ::core::convert::From::from([(
-                ::std::borrow::ToOwned::to_owned("parameters"),
-                ::std::vec![::ethers::core::abi::ethabi::Function {
-                    name: ::std::borrow::ToOwned::to_owned("parameters"),
-                    inputs: ::std::vec![],
-                    outputs: ::std::vec![
-                        ::ethers::core::abi::ethabi::Param {
-                            name: ::std::borrow::ToOwned::to_owned("factory"),
-                            kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("address"),
-                            ),
-                        },
-                        ::ethers::core::abi::ethabi::Param {
-                            name: ::std::borrow::ToOwned::to_owned("token0"),
-                            kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("address"),
-                            ),
-                        },
-                        ::ethers::core::abi::ethabi::Param {
-                            name: ::std::borrow::ToOwned::to_owned("token1"),
-                            kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("address"),
-                            ),
-                        },
-                        ::ethers::core::abi::ethabi::Param {
-                            name: ::std::borrow::ToOwned::to_owned("fee"),
-                            kind: ::ethers::core::abi::ethabi::ParamType::Uint(24usize),
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("uint24"),
-                            ),
-                        },
-                        ::ethers::core::abi::ethabi::Param {
-                            name: ::std::borrow::ToOwned::to_owned("tickSpacing"),
-                            kind: ::ethers::core::abi::ethabi::ParamType::Int(24usize),
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("int24"),
-                            ),
+            functions: ::core::convert::From::from([
+                (
+                    ::std::borrow::ToOwned::to_owned("parameters"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("parameters"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("factory"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("token0"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("token1"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("fee"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(24usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint24"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("tickSpacing"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Int(24usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("int24"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
                         },
                     ],
-                    constant: ::core::option::Option::None,
-                    state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                },],
-            )]),
+                ),
+            ]),
             events: ::std::collections::BTreeMap::new(),
             errors: ::std::collections::BTreeMap::new(),
             receive: false,
@@ -67,18 +71,21 @@ pub mod uniswap_v3_pool_deployer {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static UNISWAPV3POOLDEPLOYER_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static UNISWAPV3POOLDEPLOYER_ABI: ::ethers::contract::Lazy<
+        ::ethers::core::abi::Abi,
+    > = ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`\x80`@R4\x80\x15a\0\x10W`\0\x80\xFD[P`\xE1\x80a\0\x1F`\09`\0\xF3\xFE`\x80`@R4\x80\x15`\x0FW`\0\x80\xFD[P`\x046\x10`(W`\x005`\xE0\x1C\x80c\x89\x03W0\x14`-W[`\0\x80\xFD[`3`uV[`@\x80Q`\x01`\x01`\xA0\x1B\x03\x96\x87\x16\x81R\x94\x86\x16` \x86\x01R\x92\x90\x94\x16\x83\x83\x01Rb\xFF\xFF\xFF\x16``\x83\x01R`\x02\x92\x90\x92\x0B`\x80\x82\x01R\x90Q\x90\x81\x90\x03`\xA0\x01\x90\xF3[`\0T`\x01T`\x02\x80T`\x01`\x01`\xA0\x1B\x03\x93\x84\x16\x93\x92\x83\x16\x92\x81\x16\x91b\xFF\xFF\xFF`\x01`\xA0\x1B\x83\x04\x16\x91`\x01`\xB8\x1B\x90\x04\x90\x0B\x85V\xFE\xA2dipfsX\"\x12 J\xC4\xAAq]?\xC7J)\xCF\x0BKH\x8E$4\xA4\xB5\xAE\x1E\t\xB2m[q)\xFD\x87\x1C\x14\xBE\xFDdsolcC\0\x07\x06\x003";
+    const __BYTECODE: &[u8] = b"`\x80`@R4\x80\x15a\0\x10W`\0\x80\xFD[P`\xE1\x80a\0\x1F`\09`\0\xF3\xFE`\x80`@R4\x80\x15`\x0FW`\0\x80\xFD[P`\x046\x10`(W`\x005`\xE0\x1C\x80c\x89\x03W0\x14`-W[`\0\x80\xFD[`3`uV[`@\x80Q`\x01`\x01`\xA0\x1B\x03\x96\x87\x16\x81R\x94\x86\x16` \x86\x01R\x92\x90\x94\x16\x83\x83\x01Rb\xFF\xFF\xFF\x16``\x83\x01R`\x02\x92\x90\x92\x0B`\x80\x82\x01R\x90Q\x90\x81\x90\x03`\xA0\x01\x90\xF3[`\0T`\x01T`\x02\x80T`\x01`\x01`\xA0\x1B\x03\x93\x84\x16\x93\x92\x83\x16\x92\x81\x16\x91b\xFF\xFF\xFF`\x01`\xA0\x1B\x83\x04\x16\x91`\x01`\xB8\x1B\x90\x04\x90\x0B\x85V\xFE\xA2dipfsX\"\x12 -0\xA6CAr\xA1\xFB\x12\xA7\xA6\xD4\x0F\xC4\xC9qE\xCC\x99\xABf%\xE3\x9B\xB8\xC4\x95o\xDF\xB4\xE3=dsolcC\0\x07\x06\x003";
     /// The bytecode of the contract.
-    pub static UNISWAPV3POOLDEPLOYER_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__BYTECODE);
+    pub static UNISWAPV3POOLDEPLOYER_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __BYTECODE,
+    );
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R4\x80\x15`\x0FW`\0\x80\xFD[P`\x046\x10`(W`\x005`\xE0\x1C\x80c\x89\x03W0\x14`-W[`\0\x80\xFD[`3`uV[`@\x80Q`\x01`\x01`\xA0\x1B\x03\x96\x87\x16\x81R\x94\x86\x16` \x86\x01R\x92\x90\x94\x16\x83\x83\x01Rb\xFF\xFF\xFF\x16``\x83\x01R`\x02\x92\x90\x92\x0B`\x80\x82\x01R\x90Q\x90\x81\x90\x03`\xA0\x01\x90\xF3[`\0T`\x01T`\x02\x80T`\x01`\x01`\xA0\x1B\x03\x93\x84\x16\x93\x92\x83\x16\x92\x81\x16\x91b\xFF\xFF\xFF`\x01`\xA0\x1B\x83\x04\x16\x91`\x01`\xB8\x1B\x90\x04\x90\x0B\x85V\xFE\xA2dipfsX\"\x12 J\xC4\xAAq]?\xC7J)\xCF\x0BKH\x8E$4\xA4\xB5\xAE\x1E\t\xB2m[q)\xFD\x87\x1C\x14\xBE\xFDdsolcC\0\x07\x06\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R4\x80\x15`\x0FW`\0\x80\xFD[P`\x046\x10`(W`\x005`\xE0\x1C\x80c\x89\x03W0\x14`-W[`\0\x80\xFD[`3`uV[`@\x80Q`\x01`\x01`\xA0\x1B\x03\x96\x87\x16\x81R\x94\x86\x16` \x86\x01R\x92\x90\x94\x16\x83\x83\x01Rb\xFF\xFF\xFF\x16``\x83\x01R`\x02\x92\x90\x92\x0B`\x80\x82\x01R\x90Q\x90\x81\x90\x03`\xA0\x01\x90\xF3[`\0T`\x01T`\x02\x80T`\x01`\x01`\xA0\x1B\x03\x93\x84\x16\x93\x92\x83\x16\x92\x81\x16\x91b\xFF\xFF\xFF`\x01`\xA0\x1B\x83\x04\x16\x91`\x01`\xB8\x1B\x90\x04\x90\x0B\x85V\xFE\xA2dipfsX\"\x12 -0\xA6CAr\xA1\xFB\x12\xA7\xA6\xD4\x0F\xC4\xC9qE\xCC\x99\xABf%\xE3\x9B\xB8\xC4\x95o\xDF\xB4\xE3=dsolcC\0\x07\x06\x003";
     /// The deployed bytecode of the contract.
-    pub static UNISWAPV3POOLDEPLOYER_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
+    pub static UNISWAPV3POOLDEPLOYER_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __DEPLOYED_BYTECODE,
+    );
     pub struct UniswapV3PoolDeployer<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for UniswapV3PoolDeployer<M> {
         fn clone(&self) -> Self {
@@ -110,11 +117,13 @@ pub mod uniswap_v3_pool_deployer {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                UNISWAPV3POOLDEPLOYER_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    UNISWAPV3POOLDEPLOYER_ABI.clone(),
+                    client,
+                ),
+            )
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -174,8 +183,7 @@ pub mod uniswap_v3_pool_deployer {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-        for UniswapV3PoolDeployer<M>
-    {
+    for UniswapV3PoolDeployer<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -191,7 +199,7 @@ pub mod uniswap_v3_pool_deployer {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "parameters", abi = "parameters()")]
     pub struct ParametersCall;
@@ -206,7 +214,7 @@ pub mod uniswap_v3_pool_deployer {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ParametersReturn {
         pub factory: ::ethers::core::types::Address,

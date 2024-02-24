@@ -7,7 +7,7 @@ pub use liquidity_math::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod liquidity_math {
     #[allow(deprecated)]
@@ -22,18 +22,21 @@ pub mod liquidity_math {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static LIQUIDITYMATH_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static LIQUIDITYMATH_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
+        __abi,
+    );
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`V`#`\x0B\x82\x82\x829\x80Q`\0\x1A`s\x14`\x16W\xFE[0`\0R`s\x81S\x82\x81\xF3\xFEs\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 I;\x8D\xC7\r\xCE\xFC\x905\xA5\x13PO#G\x13<\x1C%5\xA9P\xE0\xF7\n\x9Er\xD2\xC3]\x1BsdsolcC\0\x07\x06\x003";
+    const __BYTECODE: &[u8] = b"`V`#`\x0B\x82\x82\x829\x80Q`\0\x1A`s\x14`\x16W\xFE[0`\0R`s\x81S\x82\x81\xF3\xFEs\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xB0\xBB\xF9fPMi\xC8\xA8\xBD\xD1\xD9\x96\xA0\xBD\xD6\xDD\xCA\xBA\xA4\xF2\x9F[y\xA2\x7F6\xC0L\x9A\x82\x16dsolcC\0\x07\x06\x003";
     /// The bytecode of the contract.
-    pub static LIQUIDITYMATH_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__BYTECODE);
+    pub static LIQUIDITYMATH_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __BYTECODE,
+    );
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 I;\x8D\xC7\r\xCE\xFC\x905\xA5\x13PO#G\x13<\x1C%5\xA9P\xE0\xF7\n\x9Er\xD2\xC3]\x1BsdsolcC\0\x07\x06\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xB0\xBB\xF9fPMi\xC8\xA8\xBD\xD1\xD9\x96\xA0\xBD\xD6\xDD\xCA\xBA\xA4\xF2\x9F[y\xA2\x7F6\xC0L\x9A\x82\x16dsolcC\0\x07\x06\x003";
     /// The deployed bytecode of the contract.
-    pub static LIQUIDITYMATH_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
+    pub static LIQUIDITYMATH_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __DEPLOYED_BYTECODE,
+    );
     pub struct LiquidityMath<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for LiquidityMath<M> {
         fn clone(&self) -> Self {
@@ -65,11 +68,13 @@ pub mod liquidity_math {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                LIQUIDITYMATH_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    LIQUIDITYMATH_ABI.clone(),
+                    client,
+                ),
+            )
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -112,8 +117,7 @@ pub mod liquidity_math {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-        for LiquidityMath<M>
-    {
+    for LiquidityMath<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }

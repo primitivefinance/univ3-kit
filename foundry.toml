@@ -2,3 +2,11 @@
 libs = ["lib"]
 out = "out"
 src = "contracts"
+
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts",
+    "@uniswap/v3-core/=lib/v3-core",
+    "@uniswap/v2-core/=lib/v2-core",
+    "@uniswap/lib/=lib/solidity-lib/",
+    "base64-sol/=lib/base64/"
+]

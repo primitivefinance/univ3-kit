@@ -7,7 +7,7 @@ pub use tick::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod tick {
     #[allow(deprecated)]
@@ -22,18 +22,21 @@ pub mod tick {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static TICK_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static TICK_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
+        __abi,
+    );
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`V`#`\x0B\x82\x82\x829\x80Q`\0\x1A`s\x14`\x16W\xFE[0`\0R`s\x81S\x82\x81\xF3\xFEs\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 |\x80\x82\xC7\x95O\xE6d\x87};U\xE9\xE8S\x95) y\xBE\x93\xC1\x97\xE0!\x07\x04\xD6\xE3_!\xB4dsolcC\0\x07\x06\x003";
+    const __BYTECODE: &[u8] = b"`V`#`\x0B\x82\x82\x829\x80Q`\0\x1A`s\x14`\x16W\xFE[0`\0R`s\x81S\x82\x81\xF3\xFEs\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 X;\xC3L\xD2\"\xA1%]$\xEB\x95B\xFF\x95\x89\xB7%]-@N<\xA0\xF2k\xC4\x83\x07\xFF\x127dsolcC\0\x07\x06\x003";
     /// The bytecode of the contract.
-    pub static TICK_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__BYTECODE);
+    pub static TICK_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __BYTECODE,
+    );
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 |\x80\x82\xC7\x95O\xE6d\x87};U\xE9\xE8S\x95) y\xBE\x93\xC1\x97\xE0!\x07\x04\xD6\xE3_!\xB4dsolcC\0\x07\x06\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 X;\xC3L\xD2\"\xA1%]$\xEB\x95B\xFF\x95\x89\xB7%]-@N<\xA0\xF2k\xC4\x83\x07\xFF\x127dsolcC\0\x07\x06\x003";
     /// The deployed bytecode of the contract.
-    pub static TICK_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
+    pub static TICK_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __DEPLOYED_BYTECODE,
+    );
     pub struct Tick<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for Tick<M> {
         fn clone(&self) -> Self {
@@ -53,9 +56,7 @@ pub mod tick {
     }
     impl<M> ::core::fmt::Debug for Tick<M> {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple(::core::stringify!(Tick))
-                .field(&self.address())
-                .finish()
+            f.debug_tuple(::core::stringify!(Tick)).field(&self.address()).finish()
         }
     }
     impl<M: ::ethers::providers::Middleware> Tick<M> {
@@ -65,11 +66,13 @@ pub mod tick {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                TICK_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    TICK_ABI.clone(),
+                    client,
+                ),
+            )
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -111,7 +114,8 @@ pub mod tick {
             Ok(deployer)
         }
     }
-    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>> for Tick<M> {
+    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
+    for Tick<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
