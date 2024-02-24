@@ -19,6 +19,7 @@ pub struct PriceChanger {
     pub params: OrnsteinUhlenbeckParams,
 
     #[serde(skip)]
+    #[serde(default = "trajectory_default")]
     pub current_chunk: Trajectories,
 
     #[serde(skip)]
@@ -26,6 +27,13 @@ pub struct PriceChanger {
 
     cursor: usize,
     value: f64,
+}
+
+fn trajectory_default() -> Trajectories {
+    Trajectories {
+        times: Vec::new(),
+        paths: Vec::new(),
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Default)]
@@ -68,8 +76,8 @@ impl PriceChanger {
 impl Behavior<Message> for PriceChanger {
     async fn startup(
         &mut self,
-        client: Arc<ArbiterMiddleware>,
-        messager: Messager,
+        _client: Arc<ArbiterMiddleware>,
+        _messager: Messager,
     ) -> Result<Option<EventStream<Message>>> {
         Ok(None)
     }
