@@ -4,6 +4,7 @@ use std::sync::Arc;
 use anyhow::{anyhow, Result};
 use arbiter_bindings::bindings::liquid_exchange::LiquidExchange;
 use arbiter_bindings::bindings::weth::WETH;
+use arbiter_bindings::bindings::weth::WETH;
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::{
     machine::{Behavior, EventStream},
@@ -18,7 +19,7 @@ use crate::bindings::{
 };
 
 use super::*;
-use crate::bindings::uniswap_v3_factory::UniswapV3Factory;
+use crate::bindings::{uniswap_v3_factory::UniswapV3Factory, };
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
@@ -71,7 +72,7 @@ impl Behavior<()> for Deployer {
     }
 }
 
-async fn deploy_factory(
+pub async fn deploy_factory(
     client: &Arc<ArbiterMiddleware>,
 ) -> Result<UniswapV3Factory<ArbiterMiddleware>> {
     UniswapV3Factory::deploy(client.clone(), ())
@@ -81,7 +82,7 @@ async fn deploy_factory(
         .map_err(|e| anyhow!("Failed to send factory deployment: {}", e))
 }
 
-async fn deploy_liquid_exchange(
+pub async fn deploy_liquid_exchange(
     client: &Arc<ArbiterMiddleware>,
 ) -> Result<LiquidExchange<ArbiterMiddleware>> {
     LiquidExchange::deploy(client.clone(), ())
