@@ -54,7 +54,7 @@ impl Behavior<()> for Deployer {
     }
 }
 
-async fn deploy_factory(
+pub async fn deploy_factory(
     client: &Arc<ArbiterMiddleware>,
 ) -> Result<UniswapV3Factory<ArbiterMiddleware>> {
     UniswapV3Factory::deploy(client.clone(), ())
@@ -64,7 +64,7 @@ async fn deploy_factory(
         .map_err(|e| anyhow!("Failed to send factory deployment: {}", e))
 }
 
-async fn deploy_liquid_exchange(
+pub async fn deploy_liquid_exchange(
     client: &Arc<ArbiterMiddleware>,
 ) -> Result<LiquidExchange<ArbiterMiddleware>> {
     LiquidExchange::deploy(client.clone(), ())
