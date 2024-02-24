@@ -16,3 +16,6 @@
 [submodule "lib/v2-core"]
 	path = lib/v2-core
 	url = https://github.com/Uniswap/v2-core
+[submodule "lib/solidity-lib"]
+	path = lib/solidity-lib
+	url = https://github.com/Uniswap/solidity-lib
