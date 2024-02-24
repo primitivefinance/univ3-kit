@@ -8,5 +8,5 @@ remappings = [
     "@uniswap/v3-core/=lib/v3-core",
     "@uniswap/v2-core/=lib/v2-core",
     "@uniswap/lib/=lib/solidity-lib/",
-    "base64-sol/=Brechtpd/base64/"
+    "base64-sol/=lib/base64/"
 ]
