@@ -56,7 +56,7 @@ impl Behavior<Message> for PoolAdmin {
 
         match query {
             PoolAdminQuery::PoolCreation(pool_creation) => {
-                let _ = UniswapV3Factory::new(pool_creation.factory, self.client.clone().unwrap())
+                let pool = UniswapV3Factory::new(pool_creation.factory, self.client.clone().unwrap())
                     .create_pool(
                         pool_creation.token_0,
                         pool_creation.token_1,
