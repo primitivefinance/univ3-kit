@@ -4,13 +4,13 @@ use serde::{Deserialize, Serialize};
 
 pub mod deployer;
 pub mod pool_admin;
-pub mod token_admin;
 pub mod price_changer;
+pub mod token_admin;
 
 use deployer::Deployer;
 use pool_admin::PoolAdmin;
-use token_admin::TokenAdmin;
 use price_changer::PriceChanger;
+use token_admin::TokenAdmin;
 
 #[derive(Behaviors, Debug, Serialize, Deserialize)]
 pub enum Behaviors {

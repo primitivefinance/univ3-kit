@@ -1,17 +1,16 @@
-use std::sync::Arc;
+use std::{fmt, sync::Arc};
 
 use anyhow::Result;
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::messager::{Message, Messager};
 use ethers::types::H160;
+use RustQuant::{
+    models::*,
+    stochastics::{process::Trajectories, *},
+};
+
 use super::*;
 use crate::bindings::liquid_exchange::LiquidExchange;
-
-use RustQuant::stochastics::*;
-use RustQuant::models::*;
-use RustQuant::stochastics::process::Trajectories;
-
-use std::fmt;
 
 #[derive(Serialize, Deserialize)]
 pub struct PriceChanger {
@@ -38,8 +37,8 @@ fn trajectory_default() -> Trajectories {
 
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct OrnsteinUhlenbeckParams {
-    mu: f64, 
-    sigma: f64, 
+    mu: f64,
+    sigma: f64,
     theta: f64,
 }
 
@@ -96,10 +95,12 @@ impl Behavior<Message> for PriceChanger {
         if self.cursor >= 99 {
             self.cursor = 0;
             self.value = self.current_chunk.paths.clone()[0][self.cursor];
-            self.current_chunk = ou.euler_maruyama(self.value, 0.0, 100.0, 100_usize, 1_usize, false);
+            self.current_chunk =
+                ou.euler_maruyama(self.value, 0.0, 100.0, 100_usize, 1_usize, false);
         }
 
-        let liquid_exchange = LiquidExchange::new(query.liquid_exchange, self.client.clone().unwrap());
+        let liquid_exchange =
+            LiquidExchange::new(query.liquid_exchange, self.client.clone().unwrap());
 
         let price = self.current_chunk.paths.clone()[0][self.cursor];
 
