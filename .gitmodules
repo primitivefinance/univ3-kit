@@ -7,3 +7,6 @@
 [submodule "contracts/v3-periphery"]
 	path = contracts/v3-periphery
 	url = https://github.com/Uniswap/v3-periphery.git
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
