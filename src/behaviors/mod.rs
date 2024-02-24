@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 pub mod deployer;
 pub mod pool_admin;
 pub mod token_admin;
+mod liquidity_admin;
 
 use deployer::Deployer;
 use pool_admin::PoolAdmin;

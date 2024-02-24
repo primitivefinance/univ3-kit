@@ -3,6 +3,7 @@ use std::sync::Arc;
 
 use anyhow::{anyhow, Result};
 use arbiter_bindings::bindings::liquid_exchange::LiquidExchange;
+use arbiter_bindings::bindings::weth::WETH;
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::{
     machine::{Behavior, EventStream},
@@ -11,7 +12,7 @@ use arbiter_engine::{
 use ethers::types::H160;
 
 use super::*;
-use crate::bindings::uniswap_v3_factory::UniswapV3Factory;
+use crate::bindings::{uniswap_v3_factory::UniswapV3Factory, };
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
@@ -40,6 +41,8 @@ impl Behavior<()> for Deployer {
     ) -> Result<Option<EventStream<()>>> {
         let factory = deploy_factory(&client).await?;
         let liquid_exchange = deploy_liquid_exchange(&client).await?;
+        let weth = deploy_weth(&cleint).await?;
+        let non_fungible_position_manager = deploy_position_manager(&client).await?;
 
         let deployment_data = DeploymentData {
             factory: factory.address(),
@@ -73,3 +76,17 @@ async fn deploy_liquid_exchange(
         .await
         .map_err(|e| anyhow!("Failed to send liquid exchange: {}", e))
 }
+
+async fn deploy_weth(
+    client: &Arc<ArbiterMiddleware>,
+) -> Result<WETH<ArbiterMiddleware>> {
+    WETH::deploy(client.clone(), ())
+        .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
+        .send()
+        .await
+        .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))
+}
+
+async fn deploy_Position_manager(
+    client: &Arc<ArbiterMiddleware>,
+) -> Result<<ArbiterMiddleware>>

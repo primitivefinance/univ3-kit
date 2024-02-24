@@ -2,3 +2,8 @@
 libs = ["lib"]
 out = "out"
 src = "contracts"
+
+remappings = [
+    "@openzeppelin/contracts=lib/OpenZeppelin/openzeppelin-contracts/",
+    "@uniswap/v3-core/=lib/Uniswap/v3-core/"
+]
