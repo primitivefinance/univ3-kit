@@ -1,0 +1,11 @@
+[[admin]]
+Deployer = {}
+
+[[admin]]
+PoolAdmin = {}
+
+[[admin]]
+TokenAdmin = { token_data.TKN0 = { name = "TKN0", symbol = "Token 0", decimals = 18 } }
+
+[[changer]]
+PriceChanger = { mu = 1, theta = 1, sigma = 1, cursor = 0, value = 1 }

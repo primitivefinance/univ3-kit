@@ -14,8 +14,9 @@ use crate::bindings::liquid_exchange::LiquidExchange;
 
 #[derive(Serialize, Deserialize)]
 pub struct PriceChanger {
-    #[serde(skip)]
-    pub params: OrnsteinUhlenbeckParams,
+    mu: f64,
+    sigma: f64,
+    theta: f64,
 
     #[serde(skip)]
     #[serde(default = "trajectory_default")]
@@ -35,13 +36,6 @@ fn trajectory_default() -> Trajectories {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Default)]
-pub struct OrnsteinUhlenbeckParams {
-    mu: f64,
-    sigma: f64,
-    theta: f64,
-}
-
 impl fmt::Debug for PriceChanger {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", serde_json::to_string(self).unwrap())
@@ -55,14 +49,16 @@ pub struct PriceUpdate {
 
 impl PriceChanger {
     /// Public constructor function to create a [`PriceChanger`] behaviour.
-    pub fn new(initial_value: f64, params: OrnsteinUhlenbeckParams) -> Self {
-        let ou = OrnsteinUhlenbeck::new(params.mu, params.sigma, params.theta);
+    pub fn new(initial_value: f64, mu: f64, sigma: f64, theta: f64) -> Self {
+        let ou = OrnsteinUhlenbeck::new(mu, sigma, theta);
 
         // Chunk our price trajectory over 100 price points.
         let current_chunk = ou.euler_maruyama(initial_value, 0.0, 100.0, 100_usize, 1_usize, false);
 
         Self {
-            params,
+            mu,
+            sigma,
+            theta,
             current_chunk,
             cursor: 0,
             client: None,
@@ -75,14 +71,16 @@ impl PriceChanger {
 impl Behavior<Message> for PriceChanger {
     async fn startup(
         &mut self,
-        _client: Arc<ArbiterMiddleware>,
+        client: Arc<ArbiterMiddleware>,
         _messager: Messager,
     ) -> Result<Option<EventStream<Message>>> {
+        self.client = Some(client);
+
         Ok(None)
     }
 
     async fn process(&mut self, event: Message) -> Result<ControlFlow> {
-        let ou = OrnsteinUhlenbeck::new(self.params.mu, self.params.sigma, self.params.theta);
+        let ou = OrnsteinUhlenbeck::new(self.mu, self.sigma, self.theta);
 
         let query: PriceUpdate = match serde_json::from_str(&event.data) {
             Ok(query) => query,
