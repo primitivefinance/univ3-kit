@@ -7,7 +7,7 @@ pub use nonfungible_token_position_descriptor::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types,
+    non_camel_case_types
 )]
 pub mod nonfungible_token_position_descriptor {
     #[allow(deprecated)]
@@ -23,12 +23,8 @@ pub mod nonfungible_token_position_descriptor {
                         ),
                     },
                     ::ethers::core::abi::ethabi::Param {
-                        name: ::std::borrow::ToOwned::to_owned(
-                            "_nativeCurrencyLabelBytes",
-                        ),
-                        kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
-                            32usize,
-                        ),
+                        name: ::std::borrow::ToOwned::to_owned("_nativeCurrencyLabelBytes",),
+                        kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize,),
                         internal_type: ::core::option::Option::Some(
                             ::std::borrow::ToOwned::to_owned("bytes32"),
                         ),
@@ -38,189 +34,153 @@ pub mod nonfungible_token_position_descriptor {
             functions: ::core::convert::From::from([
                 (
                     ::std::borrow::ToOwned::to_owned("WETH9"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("WETH9"),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("WETH9"),
+                        inputs: ::std::vec![],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("address"),
+                            ),
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("flipRatio"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("flipRatio"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("token0"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("token1"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("chainId"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("bool"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("flipRatio"),
+                        inputs: ::std::vec![
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("token0"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("address"),
+                                ),
+                            },
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("token1"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("address"),
+                                ),
+                            },
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("chainId"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Uint(256usize,),
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("uint256"),
+                                ),
+                            },
+                        ],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("bool"),
+                            ),
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("nativeCurrencyLabel"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "nativeCurrencyLabel",
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("nativeCurrencyLabel",),
+                        inputs: ::std::vec![],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::String,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("string"),
                             ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("string"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("nativeCurrencyLabelBytes"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "nativeCurrencyLabelBytes",
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("nativeCurrencyLabelBytes",),
+                        inputs: ::std::vec![],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize,),
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("bytes32"),
                             ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
-                                        32usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("bytes32"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("tokenRatioPriority"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("tokenRatioPriority"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("token"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("chainId"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Int(256usize),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("int256"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("tokenRatioPriority"),
+                        inputs: ::std::vec![
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("token"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("address"),
+                                ),
+                            },
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("chainId"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Uint(256usize,),
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("uint256"),
+                                ),
+                            },
+                        ],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Int(256usize),
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("int256"),
+                            ),
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("tokenURI"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("tokenURI"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("positionManager"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned(
-                                            "contract INonfungiblePositionManager",
-                                        ),
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("tokenURI"),
+                        inputs: ::std::vec![
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("positionManager"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned(
+                                        "contract INonfungiblePositionManager",
                                     ),
-                                },
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("tokenId"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("string"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
+                                ),
+                            },
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("tokenId"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Uint(256usize,),
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("uint256"),
+                                ),
+                            },
+                        ],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::String,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("string"),
+                            ),
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
                 ),
             ]),
             events: ::std::collections::BTreeMap::new(),
@@ -264,21 +224,16 @@ pub mod nonfungible_token_position_descriptor {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(
-                ::ethers::contract::Contract::new(
-                    address.into(),
-                    NONFUNGIBLETOKENPOSITIONDESCRIPTOR_ABI.clone(),
-                    client,
-                ),
-            )
+            Self(::ethers::contract::Contract::new(
+                address.into(),
+                NONFUNGIBLETOKENPOSITIONDESCRIPTOR_ABI.clone(),
+                client,
+            ))
         }
         ///Calls the contract's `WETH9` (0x4aa4a4fc) function
         pub fn weth9(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<
-            M,
-            ::ethers::core::types::Address,
-        > {
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::Address> {
             self.0
                 .method_hash([74, 164, 164, 252], ())
                 .expect("method not found (this should never happen)")
@@ -332,7 +287,8 @@ pub mod nonfungible_token_position_descriptor {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-    for NonfungibleTokenPositionDescriptor<M> {
+        for NonfungibleTokenPositionDescriptor<M>
+    {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -348,7 +304,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "WETH9", abi = "WETH9()")]
     pub struct Weth9Call;
@@ -363,7 +319,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "flipRatio", abi = "flipRatio(address,address,uint256)")]
     pub struct FlipRatioCall {
@@ -382,7 +338,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "nativeCurrencyLabel", abi = "nativeCurrencyLabel()")]
     pub struct NativeCurrencyLabelCall;
@@ -397,7 +353,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "nativeCurrencyLabelBytes", abi = "nativeCurrencyLabelBytes()")]
     pub struct NativeCurrencyLabelBytesCall;
@@ -412,9 +368,12 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
-    #[ethcall(name = "tokenRatioPriority", abi = "tokenRatioPriority(address,uint256)")]
+    #[ethcall(
+        name = "tokenRatioPriority",
+        abi = "tokenRatioPriority(address,uint256)"
+    )]
     pub struct TokenRatioPriorityCall {
         pub token: ::ethers::core::types::Address,
         pub chain_id: ::ethers::core::types::U256,
@@ -430,7 +389,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "tokenURI", abi = "tokenURI(address,uint256)")]
     pub struct TokenURICall {
@@ -446,7 +405,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub enum NonfungibleTokenPositionDescriptorCalls {
         Weth9(Weth9Call),
@@ -461,34 +420,28 @@ pub mod nonfungible_token_position_descriptor {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) = <Weth9Call as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <Weth9Call as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Weth9(decoded));
             }
-            if let Ok(decoded) = <FlipRatioCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <FlipRatioCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::FlipRatio(decoded));
             }
-            if let Ok(decoded) = <NativeCurrencyLabelCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <NativeCurrencyLabelCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::NativeCurrencyLabel(decoded));
             }
-            if let Ok(decoded) = <NativeCurrencyLabelBytesCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <NativeCurrencyLabelBytesCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::NativeCurrencyLabelBytes(decoded));
             }
-            if let Ok(decoded) = <TokenRatioPriorityCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <TokenRatioPriorityCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::TokenRatioPriority(decoded));
             }
-            if let Ok(decoded) = <TokenURICall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <TokenURICall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::TokenURI(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -498,9 +451,7 @@ pub mod nonfungible_token_position_descriptor {
         fn encode(self) -> Vec<u8> {
             match self {
                 Self::Weth9(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::FlipRatio(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
+                Self::FlipRatio(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::NativeCurrencyLabel(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -510,9 +461,7 @@ pub mod nonfungible_token_position_descriptor {
                 Self::TokenRatioPriority(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::TokenURI(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
+                Self::TokenURI(element) => ::ethers::core::abi::AbiEncode::encode(element),
             }
         }
     }
@@ -521,15 +470,9 @@ pub mod nonfungible_token_position_descriptor {
             match self {
                 Self::Weth9(element) => ::core::fmt::Display::fmt(element, f),
                 Self::FlipRatio(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NativeCurrencyLabel(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::NativeCurrencyLabelBytes(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::TokenRatioPriority(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::NativeCurrencyLabel(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NativeCurrencyLabelBytes(element) => ::core::fmt::Display::fmt(element, f),
+                Self::TokenRatioPriority(element) => ::core::fmt::Display::fmt(element, f),
                 Self::TokenURI(element) => ::core::fmt::Display::fmt(element, f),
             }
         }
@@ -539,32 +482,29 @@ pub mod nonfungible_token_position_descriptor {
             Self::Weth9(value)
         }
     }
-    impl ::core::convert::From<FlipRatioCall>
-    for NonfungibleTokenPositionDescriptorCalls {
+    impl ::core::convert::From<FlipRatioCall> for NonfungibleTokenPositionDescriptorCalls {
         fn from(value: FlipRatioCall) -> Self {
             Self::FlipRatio(value)
         }
     }
-    impl ::core::convert::From<NativeCurrencyLabelCall>
-    for NonfungibleTokenPositionDescriptorCalls {
+    impl ::core::convert::From<NativeCurrencyLabelCall> for NonfungibleTokenPositionDescriptorCalls {
         fn from(value: NativeCurrencyLabelCall) -> Self {
             Self::NativeCurrencyLabel(value)
         }
     }
     impl ::core::convert::From<NativeCurrencyLabelBytesCall>
-    for NonfungibleTokenPositionDescriptorCalls {
+        for NonfungibleTokenPositionDescriptorCalls
+    {
         fn from(value: NativeCurrencyLabelBytesCall) -> Self {
             Self::NativeCurrencyLabelBytes(value)
         }
     }
-    impl ::core::convert::From<TokenRatioPriorityCall>
-    for NonfungibleTokenPositionDescriptorCalls {
+    impl ::core::convert::From<TokenRatioPriorityCall> for NonfungibleTokenPositionDescriptorCalls {
         fn from(value: TokenRatioPriorityCall) -> Self {
             Self::TokenRatioPriority(value)
         }
     }
-    impl ::core::convert::From<TokenURICall>
-    for NonfungibleTokenPositionDescriptorCalls {
+    impl ::core::convert::From<TokenURICall> for NonfungibleTokenPositionDescriptorCalls {
         fn from(value: TokenURICall) -> Self {
             Self::TokenURI(value)
         }
@@ -580,7 +520,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct Weth9Return(pub ::ethers::core::types::Address);
     ///Container type for all return fields from the `flipRatio` function with signature `flipRatio(address,address,uint256)` and selector `0x7e5af771`
@@ -594,7 +534,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct FlipRatioReturn(pub bool);
     ///Container type for all return fields from the `nativeCurrencyLabel` function with signature `nativeCurrencyLabel()` and selector `0xb7af3cdc`
@@ -608,7 +548,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct NativeCurrencyLabelReturn(pub ::std::string::String);
     ///Container type for all return fields from the `nativeCurrencyLabelBytes` function with signature `nativeCurrencyLabelBytes()` and selector `0xa18246e2`
@@ -622,7 +562,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct NativeCurrencyLabelBytesReturn(pub [u8; 32]);
     ///Container type for all return fields from the `tokenRatioPriority` function with signature `tokenRatioPriority(address,uint256)` and selector `0x9d7b0ea8`
@@ -636,7 +576,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct TokenRatioPriorityReturn(pub ::ethers::core::types::I256);
     ///Container type for all return fields from the `tokenURI` function with signature `tokenURI(address,uint256)` and selector `0xe9dc6375`
@@ -650,7 +590,7 @@ pub mod nonfungible_token_position_descriptor {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct TokenURIReturn(pub ::std::string::String);
 }

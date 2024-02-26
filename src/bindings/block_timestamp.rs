@@ -7,7 +7,7 @@ pub use block_timestamp::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types,
+    non_camel_case_types
 )]
 pub mod block_timestamp {
     #[allow(deprecated)]
@@ -22,9 +22,8 @@ pub mod block_timestamp {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static BLOCKTIMESTAMP_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
-        __abi,
-    );
+    pub static BLOCKTIMESTAMP_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
+        ::ethers::contract::Lazy::new(__abi);
     pub struct BlockTimestamp<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for BlockTimestamp<M> {
         fn clone(&self) -> Self {
@@ -56,17 +55,16 @@ pub mod block_timestamp {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(
-                ::ethers::contract::Contract::new(
-                    address.into(),
-                    BLOCKTIMESTAMP_ABI.clone(),
-                    client,
-                ),
-            )
+            Self(::ethers::contract::Contract::new(
+                address.into(),
+                BLOCKTIMESTAMP_ABI.clone(),
+                client,
+            ))
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-    for BlockTimestamp<M> {
+        for BlockTimestamp<M>
+    {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }

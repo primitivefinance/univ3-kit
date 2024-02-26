@@ -7,51 +7,39 @@ pub use i_multicall::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types,
+    non_camel_case_types
 )]
 pub mod i_multicall {
     #[allow(deprecated)]
     fn __abi() -> ::ethers::core::abi::Abi {
         ::ethers::core::abi::ethabi::Contract {
             constructor: ::core::option::Option::None,
-            functions: ::core::convert::From::from([
-                (
-                    ::std::borrow::ToOwned::to_owned("multicall"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("multicall"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("data"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
-                                        ::std::boxed::Box::new(
-                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                        ),
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("bytes[]"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("results"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
-                                        ::std::boxed::Box::new(
-                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                        ),
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("bytes[]"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
-                        },
-                    ],
-                ),
-            ]),
+            functions: ::core::convert::From::from([(
+                ::std::borrow::ToOwned::to_owned("multicall"),
+                ::std::vec![::ethers::core::abi::ethabi::Function {
+                    name: ::std::borrow::ToOwned::to_owned("multicall"),
+                    inputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                        name: ::std::borrow::ToOwned::to_owned("data"),
+                        kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                            ::std::boxed::Box::new(::ethers::core::abi::ethabi::ParamType::Bytes,),
+                        ),
+                        internal_type: ::core::option::Option::Some(
+                            ::std::borrow::ToOwned::to_owned("bytes[]"),
+                        ),
+                    },],
+                    outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                        name: ::std::borrow::ToOwned::to_owned("results"),
+                        kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                            ::std::boxed::Box::new(::ethers::core::abi::ethabi::ParamType::Bytes,),
+                        ),
+                        internal_type: ::core::option::Option::Some(
+                            ::std::borrow::ToOwned::to_owned("bytes[]"),
+                        ),
+                    },],
+                    constant: ::core::option::Option::None,
+                    state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
+                },],
+            )]),
             events: ::std::collections::BTreeMap::new(),
             errors: ::std::collections::BTreeMap::new(),
             receive: false,
@@ -59,9 +47,8 @@ pub mod i_multicall {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static IMULTICALL_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
-        __abi,
-    );
+    pub static IMULTICALL_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
+        ::ethers::contract::Lazy::new(__abi);
     pub struct IMulticall<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for IMulticall<M> {
         fn clone(&self) -> Self {
@@ -81,7 +68,9 @@ pub mod i_multicall {
     }
     impl<M> ::core::fmt::Debug for IMulticall<M> {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple(::core::stringify!(IMulticall)).field(&self.address()).finish()
+            f.debug_tuple(::core::stringify!(IMulticall))
+                .field(&self.address())
+                .finish()
         }
     }
     impl<M: ::ethers::providers::Middleware> IMulticall<M> {
@@ -91,13 +80,11 @@ pub mod i_multicall {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(
-                ::ethers::contract::Contract::new(
-                    address.into(),
-                    IMULTICALL_ABI.clone(),
-                    client,
-                ),
-            )
+            Self(::ethers::contract::Contract::new(
+                address.into(),
+                IMULTICALL_ABI.clone(),
+                client,
+            ))
         }
         ///Calls the contract's `multicall` (0xac9650d8) function
         pub fn multicall(
@@ -112,8 +99,7 @@ pub mod i_multicall {
                 .expect("method not found (this should never happen)")
         }
     }
-    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-    for IMulticall<M> {
+    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>> for IMulticall<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -129,7 +115,7 @@ pub mod i_multicall {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "multicall", abi = "multicall(bytes[])")]
     pub struct MulticallCall {
@@ -146,7 +132,7 @@ pub mod i_multicall {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct MulticallReturn {
         pub results: ::std::vec::Vec<::ethers::core::types::Bytes>,

@@ -7,7 +7,7 @@ pub use pool_ticks_counter::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types,
+    non_camel_case_types
 )]
 pub mod pool_ticks_counter {
     #[allow(deprecated)]
@@ -22,21 +22,18 @@ pub mod pool_ticks_counter {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static POOLTICKSCOUNTER_ABI: ::ethers::contract::Lazy<
-        ::ethers::core::abi::Abi,
-    > = ::ethers::contract::Lazy::new(__abi);
+    pub static POOLTICKSCOUNTER_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
+        ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
     const __BYTECODE: &[u8] = b"`V`#`\x0B\x82\x82\x829\x80Q`\0\x1A`s\x14`\x16W\xFE[0`\0R`s\x81S\x82\x81\xF3\xFEs\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xAE\xE2\xD3\xB9\x84\x8D\xF5p\xDD\xC0\xC7dt\xE9d^4\x03\x07\xBFKv\xE2D\xCBq\xF6\xD1H\xC1\x1C1dsolcC\0\x07\x06\x003";
     /// The bytecode of the contract.
-    pub static POOLTICKSCOUNTER_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
-        __BYTECODE,
-    );
+    pub static POOLTICKSCOUNTER_BYTECODE: ::ethers::core::types::Bytes =
+        ::ethers::core::types::Bytes::from_static(__BYTECODE);
     #[rustfmt::skip]
     const __DEPLOYED_BYTECODE: &[u8] = b"s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xAE\xE2\xD3\xB9\x84\x8D\xF5p\xDD\xC0\xC7dt\xE9d^4\x03\x07\xBFKv\xE2D\xCBq\xF6\xD1H\xC1\x1C1dsolcC\0\x07\x06\x003";
     /// The deployed bytecode of the contract.
-    pub static POOLTICKSCOUNTER_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
-        __DEPLOYED_BYTECODE,
-    );
+    pub static POOLTICKSCOUNTER_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
+        ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PoolTicksCounter<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PoolTicksCounter<M> {
         fn clone(&self) -> Self {
@@ -68,13 +65,11 @@ pub mod pool_ticks_counter {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(
-                ::ethers::contract::Contract::new(
-                    address.into(),
-                    POOLTICKSCOUNTER_ABI.clone(),
-                    client,
-                ),
-            )
+            Self(::ethers::contract::Contract::new(
+                address.into(),
+                POOLTICKSCOUNTER_ABI.clone(),
+                client,
+            ))
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -117,7 +112,8 @@ pub mod pool_ticks_counter {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-    for PoolTicksCounter<M> {
+        for PoolTicksCounter<M>
+    {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }

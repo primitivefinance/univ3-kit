@@ -3,10 +3,10 @@ use arbiter_macros::Behaviors;
 use serde::{Deserialize, Serialize};
 
 pub mod deployer;
+mod liquidity_admin;
 pub mod pool_admin;
 pub mod price_changer;
 pub mod token_admin;
-mod liquidity_admin;
 
 use deployer::Deployer;
 use pool_admin::PoolAdmin;

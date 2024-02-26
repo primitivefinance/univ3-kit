@@ -1,25 +1,27 @@
-#![allow(dead_code)]
 use std::sync::Arc;
 
 use anyhow::{anyhow, Result};
-use arbiter_bindings::bindings::liquid_exchange::LiquidExchange;
-use arbiter_bindings::bindings::weth::WETH;
-use arbiter_bindings::bindings::weth::WETH;
+use arbiter_bindings::bindings::{liquid_exchange::LiquidExchange, weth::WETH};
 use arbiter_core::middleware::ArbiterMiddleware;
 use arbiter_engine::{
     machine::{Behavior, EventStream},
     messager::{Messager, To},
 };
-use ethers::abi::Bytes;
-use ethers::prelude::Client;
-use ethers::types::{Address, H160};
-use crate::bindings::{
-    nonfungible_position_manager::NonfungiblePositionManager,
-    nonfungible_token_position_descriptor::NonfungibleTokenPositionDescriptor
+use ethers::{
+    abi::Bytes,
+    contract::ContractFactory,
+    types::{Address, H160},
 };
 
 use super::*;
-use crate::bindings::{uniswap_v3_factory::UniswapV3Factory, };
+use crate::bindings::{
+    nonfungible_position_manager::{
+        NonfungiblePositionManager, NONFUNGIBLEPOSITIONMANAGER_ABI,
+        NONFUNGIBLEPOSITIONMANAGER_BYTECODE,
+    },
+    nonfungible_token_position_descriptor::NonfungibleTokenPositionDescriptor,
+    uniswap_v3_factory::UniswapV3Factory,
+};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
@@ -35,7 +37,7 @@ impl DeploymentData {
             factory,
             liquid_exchange,
             weth,
-            position_manager
+            position_manager,
         }
     }
 }
@@ -53,15 +55,20 @@ impl Behavior<()> for Deployer {
         let factory = deploy_factory(&client).await?;
         let liquid_exchange = deploy_liquid_exchange(&client).await?;
         let weth = deploy_weth(&client).await?;
-        let token_descriptor = deploy_token_descriptor(&client).await?;
-        let position_manager =
-            deploy_position_manager(&client, factory.address(), weth.address(), ).await?;
+        let token_descriptor = deploy_token_descriptor(&client, weth.address()).await?;
+        let position_manager = deploy_position_manager(
+            &client,
+            factory.address(),
+            weth.address(),
+            token_descriptor.address(),
+        )
+        .await?;
 
         let deployment_data = DeploymentData {
             factory: factory.address(),
             liquid_exchange: liquid_exchange.address(),
             weth: weth.address(),
-            position_manager: position_manager.address()
+            position_manager: position_manager.address(),
         };
 
         messager
@@ -76,10 +83,10 @@ pub async fn deploy_factory(
     client: &Arc<ArbiterMiddleware>,
 ) -> Result<UniswapV3Factory<ArbiterMiddleware>> {
     UniswapV3Factory::deploy(client.clone(), ())
-        .map_err(|e| anyhow!("Failed to deploy factory: {}", e))?
+        .map_err(|e| anyhow!("Failed to deploy factory: {:?}", e))?
         .send()
         .await
-        .map_err(|e| anyhow!("Failed to send factory deployment: {}", e))
+        .map_err(|e| anyhow!("Failed to send factory deployment: {:?}", e))
 }
 
 pub async fn deploy_liquid_exchange(
@@ -92,9 +99,7 @@ pub async fn deploy_liquid_exchange(
         .map_err(|e| anyhow!("Failed to send liquid exchange: {}", e))
 }
 
-async fn deploy_weth(
-    client: &Arc<ArbiterMiddleware>,
-) -> Result<WETH<ArbiterMiddleware>> {
+async fn deploy_weth(client: &Arc<ArbiterMiddleware>) -> Result<WETH<ArbiterMiddleware>> {
     WETH::deploy(client.clone(), ())
         .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
         .send()
@@ -105,20 +110,40 @@ async fn deploy_weth(
 async fn deploy_token_descriptor(
     client: &Arc<ArbiterMiddleware>,
     weth_address: Address,
-    native_currency_label_bytes: Bytes
 ) -> Result<NonfungibleTokenPositionDescriptor<ArbiterMiddleware>> {
+    let factory = ContractFactory::new(
+        NONFUNGIBLEPOSITIONMANAGER_ABI.clone(),
+        NONFUNGIBLEPOSITIONMANAGER_BYTECODE.clone(),
+        client.clone(),
+    );
 
+    let native_currency_label_bytes = Bytes::from(vec![0u8; 32]);
+
+    let nft_token_descriptor = factory
+        .deploy((weth_address, native_currency_label_bytes))
+        .map_err(|e| anyhow!("Failed to create deployment transaction: {:?}", e))?
+        .send()
+        .await
+        .map_err(|e| anyhow!("Failed to deploy contract: {:?}", e))?;
+
+    Ok(NonfungibleTokenPositionDescriptor::new(
+        nft_token_descriptor.address(),
+        client.clone(),
+    ))
 }
 
 async fn deploy_position_manager(
     client: &Arc<ArbiterMiddleware>,
     factory_address: Address,
     weth_address: Address,
-    token_descriptor_address: Address
+    token_descriptor_address: Address,
 ) -> Result<NonfungiblePositionManager<ArbiterMiddleware>> {
-    NonfungiblePositionManager::deploy(client.clone(), (factory_address, weth_address, token_descriptor_address))
-        .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
-        .send()
-        .await
-        .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))
+    NonfungiblePositionManager::deploy(
+        client.clone(),
+        (factory_address, weth_address, token_descriptor_address),
+    )
+    .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
+    .send()
+    .await
+    .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))
 }

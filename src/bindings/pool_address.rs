@@ -7,7 +7,7 @@ pub use pool_address::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types,
+    non_camel_case_types
 )]
 pub mod pool_address {
     #[allow(deprecated)]
@@ -22,21 +22,18 @@ pub mod pool_address {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static POOLADDRESS_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
-        __abi,
-    );
+    pub static POOLADDRESS_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
+        ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
     const __BYTECODE: &[u8] = b"`V`#`\x0B\x82\x82\x829\x80Q`\0\x1A`s\x14`\x16W\xFE[0`\0R`s\x81S\x82\x81\xF3\xFEs\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xFC\xAA-\xFB\xC8\xAAF\x1E\x1C\xE4\xBA\xD0\xD6\xFDq\x1F\xD6\xFFX0\x81\x0B\x83\xDF[w8Y).S\x04dsolcC\0\x07\x06\x003";
     /// The bytecode of the contract.
-    pub static POOLADDRESS_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
-        __BYTECODE,
-    );
+    pub static POOLADDRESS_BYTECODE: ::ethers::core::types::Bytes =
+        ::ethers::core::types::Bytes::from_static(__BYTECODE);
     #[rustfmt::skip]
     const __DEPLOYED_BYTECODE: &[u8] = b"s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x000\x14`\x80`@R`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xFC\xAA-\xFB\xC8\xAAF\x1E\x1C\xE4\xBA\xD0\xD6\xFDq\x1F\xD6\xFFX0\x81\x0B\x83\xDF[w8Y).S\x04dsolcC\0\x07\x06\x003";
     /// The deployed bytecode of the contract.
-    pub static POOLADDRESS_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
-        __DEPLOYED_BYTECODE,
-    );
+    pub static POOLADDRESS_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
+        ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
     pub struct PoolAddress<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for PoolAddress<M> {
         fn clone(&self) -> Self {
@@ -68,13 +65,11 @@ pub mod pool_address {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(
-                ::ethers::contract::Contract::new(
-                    address.into(),
-                    POOLADDRESS_ABI.clone(),
-                    client,
-                ),
-            )
+            Self(::ethers::contract::Contract::new(
+                address.into(),
+                POOLADDRESS_ABI.clone(),
+                client,
+            ))
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -116,8 +111,7 @@ pub mod pool_address {
             Ok(deployer)
         }
     }
-    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-    for PoolAddress<M> {
+    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>> for PoolAddress<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }

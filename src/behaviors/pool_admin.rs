@@ -26,10 +26,10 @@ pub enum PoolAdminQuery {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct PoolCreation {
-    factory: H160,
-    token_0: H160,
-    token_1: H160,
-    fee: u32,
+    pub factory: H160,
+    pub token_0: H160,
+    pub token_1: H160,
+    pub fee: u32,
 }
 
 #[async_trait::async_trait]
@@ -56,15 +56,16 @@ impl Behavior<Message> for PoolAdmin {
 
         match query {
             PoolAdminQuery::PoolCreation(pool_creation) => {
-                let pool = UniswapV3Factory::new(pool_creation.factory, self.client.clone().unwrap())
-                    .create_pool(
-                        pool_creation.token_0,
-                        pool_creation.token_1,
-                        pool_creation.fee,
-                    )
-                    .call()
-                    .await
-                    .map_err(|e| anyhow!("Failed to create pool: {}", e));
+                let pool =
+                    UniswapV3Factory::new(pool_creation.factory, self.client.clone().unwrap())
+                        .create_pool(
+                            pool_creation.token_0,
+                            pool_creation.token_1,
+                            pool_creation.fee,
+                        )
+                        .call()
+                        .await
+                        .map_err(|e| anyhow!("Failed to create pool: {}", e));
 
                 Ok(ControlFlow::Continue)
             }
