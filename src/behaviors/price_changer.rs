@@ -18,6 +18,8 @@ pub struct PriceChanger {
     sigma: f64,
     theta: f64,
 
+    seed: u64,
+
     #[serde(skip)]
     #[serde(default = "trajectory_default")]
     pub current_chunk: Trajectories,
@@ -49,16 +51,18 @@ pub struct PriceUpdate {
 
 impl PriceChanger {
     /// Public constructor function to create a [`PriceChanger`] behaviour.
-    pub fn new(initial_value: f64, mu: f64, sigma: f64, theta: f64) -> Self {
+    pub fn new(initial_value: f64, mu: f64, sigma: f64, theta: f64, seed: u64) -> Self {
         let ou = OrnsteinUhlenbeck::new(mu, sigma, theta);
 
         // Chunk our price trajectory over 100 price points.
-        let current_chunk = ou.euler_maruyama(initial_value, 0.0, 100.0, 100_usize, 1_usize, false);
+        let current_chunk =
+            ou.seedable_euler_maruyama(initial_value, 0.0, 100.0, 100_usize, 1_usize, false, seed);
 
         Self {
             mu,
             sigma,
             theta,
+            seed,
             current_chunk,
             cursor: 0,
             client: None,
@@ -93,8 +97,9 @@ impl Behavior<Message> for PriceChanger {
         if self.cursor >= 99 {
             self.cursor = 0;
             self.value = self.current_chunk.paths.clone()[0][self.cursor];
-            self.current_chunk =
-                ou.euler_maruyama(self.value, 0.0, 100.0, 100_usize, 1_usize, false);
+            self.current_chunk = ou.seedable_euler_maruyama(
+                self.value, 0.0, 100.0, 100_usize, 1_usize, false, self.seed,
+            );
         }
 
         let liquid_exchange =
