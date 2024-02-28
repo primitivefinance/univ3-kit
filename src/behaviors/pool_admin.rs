@@ -46,7 +46,7 @@ impl Behavior<Message> for PoolAdmin {
     }
 
     async fn process(&mut self, event: Message) -> Result<ControlFlow> {
-        let _query: PoolAdminQuery = match serde_json::from_str(&event.data) {
+        let query: PoolAdminQuery = match serde_json::from_str(&event.data) {
             Ok(query) => query,
             Err(_) => {
                 eprintln!("Failed to deserialize the event data into a PoolAdminQuery");
@@ -172,7 +172,7 @@ mod tests {
         world.add_agent(pool_admin);
         world.add_agent(deployer);
 
-        world.run().await.expect("world failed to run");
+        let _ = world.run().await.expect("world failed to run");
 
         let env = world.environment;
         let mut world = World::new("univ3");

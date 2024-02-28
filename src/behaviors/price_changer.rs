@@ -98,7 +98,7 @@ impl Behavior<Message> for PriceChanger {
     async fn process(&mut self, event: Message) -> Result<ControlFlow> {
         let ou = OrnsteinUhlenbeck::new(self.mu, self.sigma, self.theta);
 
-        let query: PriceUpdate = match serde_json::from_str(&event.data) {
+        let _query: PriceUpdate = match serde_json::from_str(&event.data) {
             Ok(query) => query,
             Err(_) => {
                 eprintln!("Failed to deserialize the event data into a PriceUpdate");
