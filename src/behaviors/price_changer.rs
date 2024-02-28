@@ -2,8 +2,10 @@ use std::{fmt, sync::Arc};
 
 use anyhow::Result;
 use arbiter_core::middleware::ArbiterMiddleware;
+use crate::behaviors::deployer::DeploymentData;
 use arbiter_engine::messager::{Message, Messager};
 use ethers::types::H160;
+use futures::stream::StreamExt;
 use RustQuant::{
     models::*,
     stochastics::{process::Trajectories, *},
@@ -27,6 +29,8 @@ pub struct PriceChanger {
     #[serde(skip)]
     pub client: Option<Arc<ArbiterMiddleware>>,
 
+    pub liquid_exchange: Option<H160>,
+
     cursor: usize,
     value: f64,
 }
@@ -45,9 +49,7 @@ impl fmt::Debug for PriceChanger {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct PriceUpdate {
-    liquid_exchange: H160,
-}
+pub struct PriceUpdate;
 
 impl PriceChanger {
     /// Public constructor function to create a [`PriceChanger`] behaviour.
@@ -66,6 +68,7 @@ impl PriceChanger {
             current_chunk,
             cursor: 0,
             client: None,
+            liquid_exchange: None,
             value: initial_value,
         }
     }
@@ -76,9 +79,21 @@ impl Behavior<Message> for PriceChanger {
     async fn startup(
         &mut self,
         client: Arc<ArbiterMiddleware>,
-        _messager: Messager,
+        messager: Messager,
     ) -> Result<Option<EventStream<Message>>> {
         self.client = Some(client);
+
+        loop {
+            while let Some(message) = messager.clone().stream().unwrap().next().await {
+                match serde_json::from_str::<DeploymentData>(&message.data) {
+                    Ok(data) => {
+                        self.liquid_exchange = Some(data.liquid_exchange);
+                        break;
+                    },
+                    Err(_) => continue,
+                };
+            }
+        }
 
         Ok(None)
     }
@@ -103,7 +118,7 @@ impl Behavior<Message> for PriceChanger {
         }
 
         let liquid_exchange =
-            LiquidExchange::new(query.liquid_exchange, self.client.clone().unwrap());
+            LiquidExchange::new(self.liquid_exchange.unwrap(), self.client.clone().unwrap());
 
         let price = self.current_chunk.paths.clone()[0][self.cursor];
 
