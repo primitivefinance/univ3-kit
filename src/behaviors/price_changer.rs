@@ -2,7 +2,6 @@ use std::{fmt, sync::Arc};
 
 use anyhow::Result;
 use arbiter_core::middleware::ArbiterMiddleware;
-use crate::behaviors::deployer::DeploymentData;
 use arbiter_engine::messager::{Message, Messager};
 use ethers::types::H160;
 use futures::stream::StreamExt;
@@ -12,7 +11,7 @@ use RustQuant::{
 };
 
 use super::*;
-use crate::bindings::liquid_exchange::LiquidExchange;
+use crate::{behaviors::deployer::DeploymentData, bindings::liquid_exchange::LiquidExchange};
 
 #[derive(Serialize, Deserialize)]
 pub struct PriceChanger {
@@ -83,19 +82,17 @@ impl Behavior<Message> for PriceChanger {
     ) -> Result<Option<EventStream<Message>>> {
         self.client = Some(client);
 
-        loop {
-            while let Some(message) = messager.clone().stream().unwrap().next().await {
-                match serde_json::from_str::<DeploymentData>(&message.data) {
-                    Ok(data) => {
-                        self.liquid_exchange = Some(data.liquid_exchange);
-                        break;
-                    },
-                    Err(_) => continue,
-                };
-            }
+        while let Some(message) = messager.clone().stream().unwrap().next().await {
+            match serde_json::from_str::<DeploymentData>(&message.data) {
+                Ok(data) => {
+                    self.liquid_exchange = Some(data.liquid_exchange);
+                    break;
+                }
+                Err(_) => continue,
+            };
         }
 
-        Ok(None)
+        Ok(Some(messager.clone().stream().unwrap()))
     }
 
     async fn process(&mut self, event: Message) -> Result<ControlFlow> {
