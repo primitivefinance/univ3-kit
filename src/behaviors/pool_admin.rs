@@ -42,7 +42,7 @@ impl Behavior<Message> for PoolAdmin {
         self.client = Some(client.clone());
         self.messager = Some(messager.clone());
 
-        Ok(None)
+        Ok(Some(messager.clone().stream().unwrap()))
     }
 
     async fn process(&mut self, event: Message) -> Result<ControlFlow> {
@@ -172,7 +172,7 @@ mod tests {
         world.add_agent(pool_admin);
         world.add_agent(deployer);
 
-        world.run().await.expect("world failed to run");
+        let _ = world.run().await.expect("world failed to run");
 
         let env = world.environment;
         let mut world = World::new("univ3");

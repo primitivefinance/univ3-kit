@@ -88,7 +88,7 @@ impl Behavior<Message> for TokenAdmin {
 
         let _ = messager.send(To::All, &message_content).await;
 
-        Ok(None)
+        Ok(Some(messager.clone().stream().unwrap()))
     }
 
     async fn process(&mut self, event: Message) -> Result<ControlFlow> {

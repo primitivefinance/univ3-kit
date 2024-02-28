@@ -15,8 +15,8 @@ use crate::bindings::uniswap_v3_factory::UniswapV3Factory;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeploymentData {
-    factory: H160,
-    liquid_exchange: H160,
+    pub factory: H160,
+    pub liquid_exchange: H160,
 }
 
 impl DeploymentData {
