@@ -8,6 +8,7 @@ pub mod price_changer;
 pub mod terminator;
 pub mod token_admin;
 
+use arbitrageur::Arbitrageur;
 use deployer::Deployer;
 use pool_admin::PoolAdmin;
 use price_changer::PriceChanger;
@@ -17,6 +18,7 @@ use token_admin::TokenAdmin;
 #[derive(Behaviors, Debug, Serialize, Deserialize)]
 pub enum Behaviors {
     Deployer(Deployer),
+    Arbitrageur(Arbitrageur),
     TokenAdmin(TokenAdmin),
     Terminator(Terminator),
     PoolAdmin(PoolAdmin),
