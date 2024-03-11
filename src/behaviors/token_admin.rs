@@ -22,7 +22,7 @@ pub struct TokenAdmin {
     pub client: Option<Arc<ArbiterMiddleware>>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TokenData {
     pub name: String,
     pub symbol: String,
@@ -84,9 +84,7 @@ impl Behavior<Message> for TokenAdmin {
         self.tokens = Some(deployed_tokens);
         self.client = Some(client.clone());
 
-        let message_content = serde_json::to_string(&token_addresses)?;
-
-        let _ = messager.send(To::All, &message_content).await;
+        let _ = messager.send(To::All, &token_addresses).await;
 
         Ok(Some(messager.clone().stream().unwrap()))
     }
@@ -103,8 +101,11 @@ impl Behavior<Message> for TokenAdmin {
         match query {
             TokenAdminQuery::AddressOf(token_name) => {
                 if let Some(token_data) = self.token_data.get(&token_name) {
-                    let response = serde_json::to_string(&token_data.address)
-                        .map_err(|_| anyhow::anyhow!("Failed to serialize token address"))?;
+                    let response = if let Some(v) = token_data.address {
+                        v
+                    } else {
+                        return Err(anyhow::anyhow!("Token address is not found."));
+                    };
                     if let Some(messager) = &self.messager {
                         messager
                             .send(To::Agent(event.from.clone()), response)
@@ -141,7 +142,8 @@ impl Behavior<Message> for TokenAdmin {
                 Ok(ControlFlow::Continue)
             }
             TokenAdminQuery::DeployRequest(deploy_request) => {
-                ArbiterToken::deploy(
+                let req = deploy_request.clone();
+                let token = ArbiterToken::deploy(
                     self.client.clone().unwrap(),
                     (
                         deploy_request.name,
@@ -151,6 +153,11 @@ impl Behavior<Message> for TokenAdmin {
                 )?
                 .send()
                 .await?;
+
+                self.token_data.insert(req.name.clone(), req.clone());
+                self.tokens.as_mut().and_then(|token_obj| 
+                    token_obj.insert(req.name, token)
+                );
 
                 Ok(ControlFlow::Continue)
             }

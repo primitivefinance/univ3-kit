@@ -129,7 +129,7 @@ mod tests {
             };
 
             messager
-                .send(To::All, serde_json::to_string(&pool_creation_request)?)
+                .send(To::All, &pool_creation_request)
                 .await?;
 
             Ok(None)
