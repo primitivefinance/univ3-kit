@@ -128,9 +128,7 @@ mod tests {
                 fee: 100,
             };
 
-            messager
-                .send(To::All, &pool_creation_request)
-                .await?;
+            messager.send(To::All, &pool_creation_request).await?;
 
             Ok(None)
         }

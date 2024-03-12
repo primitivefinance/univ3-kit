@@ -155,9 +155,9 @@ impl Behavior<Message> for TokenAdmin {
                 .await?;
 
                 self.token_data.insert(req.name.clone(), req.clone());
-                self.tokens.as_mut().and_then(|token_obj| 
-                    token_obj.insert(req.name, token)
-                );
+                self.tokens
+                    .as_mut()
+                    .and_then(|token_obj| token_obj.insert(req.name, token));
 
                 Ok(ControlFlow::Continue)
             }

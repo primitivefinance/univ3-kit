@@ -12,7 +12,6 @@ use ethers::types::{H160, U256};
 use tracing::info;
 
 use self::token_admin::TokenData;
-
 use super::*;
 use crate::bindings::uniswap_v3_factory::UniswapV3Factory;
 
@@ -40,7 +39,7 @@ pub struct LiquidExchangeParameters {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Deployer {
-    pub liquid_exchange_parameters: LiquidExchangeParameters
+    pub liquid_exchange_parameters: LiquidExchangeParameters,
 }
 
 #[async_trait::async_trait]
@@ -54,23 +53,28 @@ impl Behavior<()> for Deployer {
 
         let le_param = self.liquid_exchange_parameters.clone();
         let liquid_exchange = deploy_liquid_exchange(
-            &client, 
-            &le_param.asset_token_parameters, 
+            &client,
+            &le_param.asset_token_parameters,
             &le_param.quote_token_parameters,
-            le_param.initial_price
-        ).await?;
+            le_param.initial_price,
+        )
+        .await?;
         info!("Factory deployed at {:?}", factory.address());
-        info!("Liquid exchange deployed at {:?}", liquid_exchange.address());
-        info!("Liquid exchange initial price : {:?}", liquid_exchange.price().call().await?);
+        info!(
+            "Liquid exchange deployed at {:?}",
+            liquid_exchange.address()
+        );
+        info!(
+            "Liquid exchange initial price : {:?}",
+            liquid_exchange.price().call().await?
+        );
 
         let deployment_data = DeploymentData {
             factory: factory.address(),
             liquid_exchange: liquid_exchange.address(),
         };
 
-        messager
-            .send(To::All, &deployment_data)
-            .await?;
+        messager.send(To::All, &deployment_data).await?;
 
         Ok(None)
     }
@@ -90,7 +94,7 @@ pub async fn deploy_liquid_exchange(
     client: &Arc<ArbiterMiddleware>,
     arbx_param: &TokenData,
     arby_param: &TokenData,
-    initial_price: f64
+    initial_price: f64,
 ) -> Result<LiquidExchange<ArbiterMiddleware>> {
     let initial_liquid_exchange_price = U256::from((initial_price * 10f64.powf(18.0)) as u64);
 
@@ -121,15 +125,15 @@ pub async fn deploy_liquid_exchange(
     info!("Arbiter Token Y contract deployed at {:?}", arby.address());
 
     LiquidExchange::deploy(
-        client.clone(), 
+        client.clone(),
         (
             arbx.address(),
             arby.address(),
             initial_liquid_exchange_price,
         ),
     )
-        .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
-        .send()
-        .await
-        .map_err(|e| anyhow!("Failed to send liquid exchange: {}", e))
+    .map_err(|e| anyhow!("Failed to deploy liquid exchange: {}", e))?
+    .send()
+    .await
+    .map_err(|e| anyhow!("Failed to send liquid exchange: {}", e))
 }
