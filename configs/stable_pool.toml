@@ -1,5 +1,5 @@
 [[admin]]
-Deployer = {}
+Deployer = { liquid_exchange_parameters = { asset_token_parameters = { name = "Arbiter Token X", symbol = "ARBX", decimals = 18 }, quote_token_parameters = { name = "Arbiter Token Y", symbol = "ARBY", decimals = 18 }, initial_price = 1.0 }}
 
 [[admin]]
 PoolAdmin = {}
